@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Google Coaching Call Questions</title>
+</head>
+<body>
+	<script>
+	/* jshint esversion: 6*/
+// 		 *Please solve these questions on your own time and come prepared with questions. Submit your answers through this form: https://docs.google.com/a/google.com/forms/d/1dj6DtkKp3z-0Tr3vzaVqwIYyS79OEVNIKD2DrqRoxkw/viewform prior to the hangout session. 
+
+
+// [1] Given an array of integers, determine whether or not there exist two elements in the array (at different positions) whose sum is equal to some target value. Examples: [5, 4, 2, 4], 8 --> true [5, 1, 2, 4], 8 --> false 
+
+	/*
+	NOTES:
+		can the integers be negative?
+		Are they counting integers or other integers (i.e. zip codes)?
+		Are they sorted?
+	CONSIDER:
+		What if the array is empty?
+
+
+	INITIAL THOUGHT:
+		BRUTE FORCE: Nested loops that check each combination of pairs--> On^2 
+
+		Use a greedy method?
+			Given a value at a certain index, calculate what the target pair would be that would be needed to equal the target sum -- BINARY SEARCH
+			Could do this by storing the numbers that we have seen SO FAR and as we go through see if that pair exists
+			i.e. -->
+				given the array [5, 4, 2, 4] and target sum 8,
+				target pairs would be as follows;
+					5 --> 3 (8 - 5 = 3);
+					4 --> 4 (8 - 4 = 4);
+					2 --> 6 (8 - 2 = 2);
+					4 --> 4 (8 - 4 = 4);
+				The array would sort as [2, 4, 4, 5];
+				ASK IF YOU HAVE SEEN THE COMPLEMENT PAIR (what value added to the value at that index would equal the target sum) SO FAR.
+				If not, push the index value
+				If so, return true
+				Loop until end of the array & return false if not found
+	*/
+
+		function findSumPair(array, targetVal) {
+			var sumPairArray = [];
+			var indexComplement = 0;
+			for (var i = 0; i < array.length; i++) {
+				indexComplement = targetVal - array[i];
+				if (sumPairArray.indexOf(indexComplement) > -1) {
+					return true;
+				}
+				sumPairArray.push(array[i]);
+			}
+			return false;
+		}
+
+		var testTarget = 8;
+		var test = [5, 4, 2, 4];
+		console.log(findSumPair(test, testTarget));
+			//true
+		var test2 = [5, 1, 2, 4];
+		console.log(findSumPair(test2, testTarget));
+			//false
+		var test3 = [];
+		console.log(findSumPair(test3, testTarget));
+			//false
+		var test4 = [0, -2, 6, 10];
+		console.log(findSumPair(test4, testTarget));
+			//true
+		var test5 = [-1, 8, 5, 11];
+		console.log(findSumPair(test5, testTarget));
+			//false
+		var test6 = [1, 5, 7, 10];
+		console.log(findSumPair(test6, testTarget));
+			//true
+
+
+// [2] Implement a set-like data structure that supports Insert, Remove, and GetRandomElement efficiently. Example: If you insert the elements 1, 3, 6, 8 and remove 6, the structure should contain [1, 3, 8]. Now, GetRandom should return one of 1, 3 or 8 with equal probability. 
+
+	function Set() {
+
+	    let items = {};
+
+	    this.add = function(value) {
+	        if (!this.has(value)){
+	            items[value] = value;
+	            return true;
+	        }
+	        return false;
+	    };
+
+	    this.delete = function(value) {
+	        if (this.has(value)){
+	            delete items[value];
+	            return true;
+	        }
+	        return false;
+	    };
+
+	    this.has = function(value) {
+	        return items.hasOwnProperty(value);
+	    };
+
+	    this.values = function() {
+	        let values = [];
+	        for (let i = 0, keys = Object.keys(items); i < keys.length; i++) {
+	            values.push(items[keys[i]]);
+	        }
+	        return values;
+	    };
+
+	    this.getRandomElement = function() {
+	    	var keys = Object.keys(items);
+	    	return items[keys[Math.floor(Math.random() * keys.length)]];
+	    };
+	}
+
+
+//TESTING
+		let set = new Set();
+
+		set.add(1);
+		set.add(3);
+		set.add(6);
+		set.add(8);
+		console.log(set.values()); 
+			// [1, 3, 6, 8];
+		set.delete(6);
+		console.log(set.values()); 
+			// [1, 3, 8];
+		console.log(set.getRandomElement());
+
+	</script>
+</body>
+</html>
