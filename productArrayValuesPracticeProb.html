@@ -7,22 +7,22 @@
 <body>
 	<script>
 		function getProductsOfAllIntsExceptAtIndex(array){
-			var productsBeforeIndex = [];
+			var products = [];
 			var productsSoFar = 1;
 			for (var i = 0; i < array.length; i++) {
-				productsBeforeIndex[i] = productsSoFar;
+				products[i] = productsSoFar;
 				productsSoFar *= array[i];
 			}
-			var productsAfterIndex = [];
-			var productsSoFarII = 1;
-			for (var i = array.length - 1; i >= 0; i--) {
-				productsAfterIndex[i] = productsSoFar;
-				productsSoFar *= array[i];
+			productsSoFar = 1;
+			for (var j = array.length - 1; j >= 0; j--) {
+				products[j] *= productsSoFar;
+				productsSoFar *= array[j];
 			}
-			
+			return products;
 		}
 
 		console.log(getProductsOfAllIntsExceptAtIndex([1, 7, 3, 4]));
+
 
 
 	</script>
