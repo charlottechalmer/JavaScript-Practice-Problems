@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Rectangle Intersection Algorithm Problem</title>
+</head>
+<body>
+	<script>
+		/*write a function to find the recrangular intersection of two given love triangles
+		- rectangles are always "straight" and never "diagonal" --> each side is parallel with either the x-axis or the y-axis
+		-defined as objects like this:
+			var myRectangle1 = {
+
+				// coordinates of bottom-left corner
+				leftX: 1,
+				bottomY: 5,
+
+				//width and height
+				width: 10,
+				height: 4,
+			};
+
+		THINGS TO CONSIDER:
+			What if there is no overlap?
+			What if one rectangle is completely enveloped in the other?
+			What if they dont overlap, but rather share an edge? ***
+
+		*/
+
+
+
+		// function findXOverlap(rec1, rec2) {
+			// var lX1 = rec1.leftX;
+			// var rX1 = rec1.leftX + rec1.width;
+			// var lX2 = rec2.leftX;
+			// var rX2 = rec2.leftX + rec2.width;
+			//if one range is contained
+			// if (((lX1 < lX2) && (rX1 > rX2)) || ((lX1 > lX2) && (rX1 < rX2))) {
+			// 	console.log("one x is contained in the other");
+			// } else {
+			// 	console.log("the xs are not contained within the other");
+			// }
+			//if there is an overlap
+			// if (((lx1 < lx2) && (rx1 < rx2)) || ((lx1 > lx2) && (rx1 > rx2))) {
+			// 	console.log("there is an overlap on xs");
+			// } else {
+			// 	console.log("there is no overlap on xs");
+			// }
+		// }
+
+
+	//FINDS OVERLAP FOR X AND Y SEPARATELY
+		// function findXOverlap(x1, width1, x2, width2) {
+		// 	var highestStartPointX = Math.max(x1, x2);
+		// 	var lowestEndPointX = Math.min(x1 + width1, x2 + width2);
+		// 		//This finds the rightmost start point and the leftmost end point
+
+		// 	if (highestStartPointX >= lowestEndPointX) {
+		// 		return {startPointX: null, width: null};
+		// 			//this returns null if there is no overlap
+		// 	}
+
+		// 	var overlapWidth = lowestEndPointX - highestStartPointX;
+		// 	 	//this computes the overlap width;
+
+		// 	 return {startPointX: highestStartPointX, width: overlapWidth};
+		// }
+
+		// function findYOverlap(y1, height1, y2, height2) {
+		// 	var highestStartPointY = Math.max(y1, y2);
+		// 	var lowestEndPointY = Math.min(y1 + height1, y2 + height2);
+
+		// 	if (highestStartPointY >= lowestEndPointY) {
+		// 		return {startPointY: null, height: null};
+		// 	}
+
+		// 	var overlapHeight = lowestEndPointY - highestStartPointY;
+
+		// 	return {startPointY: highestStartPointY, height: overlapHeight};
+		// }
+
+//TO FIND OVERLAP GENERALL:
+	
+	function findOverlapRange(point1, length1, point2, length2) {
+		var highestStartPoint = Math.max(point1, point2);
+		var lowestEndPoint = Math.min(point1 + length1, point2 + length2);
+
+		if (highestStartPoint >= lowestEndPoint) {
+			return {startPoint: null, overlapLength: null};
+		}
+
+		var overlapLength = lowestEndPoint - highestStartPoint;
+
+		return {startPoint: highestStartPoint, overlapLength: overlapLength};
+	}
+
+//THEN NEED TO DO THIS FOR BOTH RECTANGLES
+	
+	function findRectangleOverlap(rect1, rect2) {
+		var xOverlap = findOverlapRange(rect1.leftX, rect1.width, rect2.leftX, rect2.width);
+		var yOverlap = findOverlapRange(rect1.bottomY, rect1.height, rect2.bottomY, rect2.height);
+
+		if(!xOverlap.overlapLength || !yOverlap.overlapLength) {
+			return {
+				leftX: null,
+				bottomY: null,
+				width: null,
+				height: null
+			};
+		}
+
+		return {
+			leftX: xOverlap.startPoint,
+			bottomY: yOverlap.startPoint,
+			width: xOverlap.overlapLength,
+			height: yOverlap.overlapLength
+		};
+	}
+
+
+	</script>
+</body>
+</html>
