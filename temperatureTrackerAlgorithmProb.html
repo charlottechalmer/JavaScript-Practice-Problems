@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Temperature Tracker Algorithm Problem</title>
+</head>
+<body>
+	<script>
+		/* 
+		Write a class TempTracker with these methods:
+
+			1. insert() -- records a new temp
+			2. getMax() -- returns the highest temp we've seen so far
+			3. getMin() -- returns the lowest temp we've seen so far
+			4. getMean() -- returns the mean of all the temps we've seen so far
+			5. getMode() -- returns a mode of all temps we've seen so far
+
+		** optimize for face and time-- favor speeding up the getter functions (getMax(), getMin(), getMean(), getMode()) over speeding up the insert() function
+
+		Temperatures will all be integers
+					 will all be in Fahrenheit (∴ range will be from 0...110)
+		if there is more than one mode, return any of the modes.
+		*/
+
+	//THOUGHT PROCESS
+	/* 
+		Best data structures for insert (O(1)): 
+			array
+			tree
+			object
+			doubly-linked-list
+			queue
+				deque
+			stack
+
+		Best data structures for finding max/min (O(1)):
+			Heap
+			Priority Queue
+	
+		Best BIG O NOTATION for finding mean would be O(n) --> (need to go through each)
+		Best 
+	*/
+
+	function TempTracker() {
+		this.occurance = [];
+		for(var i = 0; i < 111; i++) {
+			this.occurance[i] = 0;
+		}
+		this.maxOccurance = 0;
+		this.mode = null;
+
+		this.totalNumbers = 0;
+		this.totalSum = 0;
+		this.mean = null;
+
+		this.minTemp = null;
+		this.maxTemp = null;
+	}
+
+	TempTracker.prototype.insert = function(temperature) {
+		this.occurance[temperature]++;
+		if(this.occurance[temperature] > this.maxOccurance) {
+			this.mode = temperature;
+			this.maxOccurance = this.occurance[temperature];
+		}
+
+
+		this.totalNumbers++;
+		this.totalSum += temperature;
+		this.mean = this.totalSum / this.totalNumbers;
+
+		if (this.maxTemp === null || temperature > this.maxTemp) {
+			this.maxTemp = temperature;
+		}
+		if (this.minTemp === null || temperature < this.minTemp) {
+			this.minTemp = temperature;
+		}
+	};
+
+	TempTracker.prototype.getMax = function() {
+		return this.maxTemp;
+	};
+
+	TempTracker.prototype.getMin = function() {
+		return this.minTemp;
+	};
+
+	TempTracker.prototype.getMean = function() {
+		return this.mean;
+	};
+
+	TempTracker.prototype.getMode = function() {
+		return this.mode;
+	};
+
+
+
+
+	</script>
+</body>
+</html>
