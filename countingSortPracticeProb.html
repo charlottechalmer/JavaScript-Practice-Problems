@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Sorting Top Scores Algorithm Practice</title>
+</head>
+<body>
+	<script>
+		/*
+		You have a popular game that sorts players scores from highest to lowest. The algorithm you are currently using sorts in O(n log n) time, but the players are complaining that their rankings arent updated fast enough.
+
+		Write a function that take in an array of unsorted scores and the highest possible score in the game and returns a sorted array of scores in less then O(n log n) time.
+
+		For example: 
+			var unsortedScores = [37, 89, 41, 65, 91, 53];
+			const HIGHEST_POSSIBLE_SCORE = 100;
+
+			sortScores(unsortedScores, HIGHEST_POSSIBLE_SCORE);
+				// --> returns [37, 41, 53, 65, 89, 91];
+		*/
+
+		function sortScores(unsortedScores, HIGHEST_POSSIBLE_SCORE) {
+			var scoreCounts = [];
+			for(var i = 0; i < HIGHEST_POSSIBLE_SCORE + 1; i ++) {
+				scoreCounts.push(0);
+			} // this populates the array with all the indicies with a 0 UP UNTIL the highest possible score
+
+			unsortedScores.forEach(function(score) {
+				scoreCounts[score]++;
+			}); //populate scoreCounts with the values in the given unsorted score array
+
+			var sortedScores = []; //populate the final sorted array
+
+			scoreCounts.forEach(function(count, score) { //for each item in scoreCounts
+
+				for (var time = 0; time < count; time++) { //for the number of times the item occurs
+					sortedScores.push(score);
+				}
+			});
+
+			return sortedScores;
+		}
+
+
+
+	</script>
+</body>
+</html>
