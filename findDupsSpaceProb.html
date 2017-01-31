@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		function findDuplicate(arr) {
+			var numbersSeen = new Set();
+			for (var i = 0; i < arr.length; i++) {
+				var number = arr[i];
+				if (numbersSeen.has(number)) {
+					return number;
+				} else {
+					numbersSeen.add(number);
+				}
+			}
+			throw new Error('No duplicates found!');
+		}
+
+		var test = [1, 1];
+		console.log(findDuplicate(test));
+
+		var test2 = [1, 2, 3, 3, 4];
+		console.log(findDuplicate(test2));
+
+
+	</script>
+</body>
+</html>
