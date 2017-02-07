@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Interview Question Practice Problem</title>
+</head>
+<body>
+	<script>
+		/*jshint esversion: 6 */
+		//event delegation
+			//JS as it relates to the DOM -- when assign event listeners on a dom element, it is actually firing on every child to that element. -- essentially adding children to all of the children
+
+		//event bubbling
+			//Also known as propogation an element will "bubble up"	and also fire on all parents. Events on an element will bubble up to all of its parents
+
+			// if you have live edits to a form that you want to track and you have a form with inputs (all different types) and test when they blur out or key up-- could go through and target each individually-- grab by tag etc. (have one function to bind to it) or you could bind to the parent (grab the form itself -- anything that can fire a change event will fire a change event)
+				//when listening to a more universal event, use event target, not event current target
+					//target is the actual thing that was clicked, current target is what the event listener is connected to
+
+		//explain why the following doesnt work as an IIFE (Immediately Invoked Function Expression)
+			function foo() {
+				// I pity this code
+			}(); //--> JS reads this as having the () on a different line
+					//would get a syntax error if run like this
+
+				//difference between writing as a definition v. as an expression 
+					//expressions result in a value
+					//i.e.:
+					function foo() {
+						//I am known as a definition or statement
+					}
+
+					var foo = function() {
+						//I am an expression. I resolve to a value even if it is just 'undefined'
+					};
+
+					//To make this runable as is, put parens around it:
+					( function foo() {
+						//now JS interprets as an expression not a statement
+					}  ) ();
+
+			//Why would I ever use this?
+				//do it to control variable scope:
+				(function foo() {})();
+					//this is not available outside of the scope of this function. 
+					console.log(foo); //results in a syntax error-- foo is not defined
+
+	//explain 'hoisting'
+		//all variables (var) are declared at the top of any given function scope whether you like it or not (including function declaration) --> 'hoisted' to the top
+			//ex:
+				function hoist(track) {
+					if (track === 'Down With Disease') {
+						var action = 'dance';
+					} else {
+						var action = 'skip';
+					}
+					return action;
+				}
+				//cant define variables conditionally--> JS is actually doing this:
+				function hoist(track) {
+					var action;
+					if (track === 'Down With Disease') {
+						action = 'dance';
+					} else {
+						var action = 'skip'; //here it is actually being declared again
+					}
+					return action;
+				}
+				//this actually works in the browser but linters don't like it
+
+			//--> IN WALKS const AND let in ES6
+					//NOT HOISTED
+					//scoped within the block that they are in
+					//gives you more control
+						//Dr. Axel Rauschmayer-- Const and Let in ESCMA6
+
+	//What is the difference between a variable that is: null, undefined, or undeclared?
+		//undeclared-- when try to use a variable that hasnt been declared-- "ripped out some code and it's not working"
+		//undefined -- means that it's been declared but it has not been assigned a value
+					// -- empty object and try to grab something that is undefined
+					// --> run a function and the function doesnt return anything
+			//undeclared usually means something has gone wrong and undefined doesn't nec. mean something has gone wrong
+				//const requires an assignment of a variable
+				//variable declared but no defined value (not initialized)
+				//object/array exists but nothing at that key/index
+				//function exists but doesn't return anything
+				//falsy
+		//null -- null has a value, its value is null
+			//null is a nothing value	
+			//not zero, not an empty string/object/array
+			//falsy
+			//see frequently in APIs -- if ever have a situation where you need to zero out a number is a good place to use null
+		//how do you go about checking for any of these states?
+			//undeclared usually finds you -- but not always-- if trying to assign a value to a variable that hasn't been assigned, JS will assign it to the global scope (why use a linter)
+			
+			//check for undefined -->
+				let foo;
+				console.log(typeof foo); //'undefined' as a string
+				console.log(typeof bar); //undeclared, but also returns 'undefined'
+
+				//preferred
+				console.log(foo === undefined); //true boolean
+
+				const has = 'undefined';
+				console.log(baz === undefined); //false. Hooray, I guess...
+
+	 		//check for null --> 
+	 			const foo = null;
+
+	 			console.log(typeof foo); //object (this is a bug in JS)
+
+	 			//preferred
+	 			console.log(foo === null); //true boolean
+
+	//what is the difference between == and ===?
+		//when use ==, check for equality
+			//JS sees null and undefined as being equal even though they arent the same type of thing
+		// === checks for equality and type
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>
